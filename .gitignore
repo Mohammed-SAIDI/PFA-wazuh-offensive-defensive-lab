@@ -1,0 +1,59 @@
+﻿# ==========================================
+# GITIGNORE - Security & DevOps Best Practices
+# ==========================================
+
+# Secrets, Keys & Private Certificates
+*.pem
+*.key
+*.pfx
+*.p12
+*.crt
+*.csr
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+*.kdbx
+*.ovpn
+*.conf.secret
+
+# Environment & Credentials
+.env
+.env.*
+*.env
+config.local.json
+secrets.yml
+credentials.txt
+passwords.txt
+
+# Backups & Temporary files
+*.bak
+*.swp
+*.tmp
+*~
+*.old
+/root/BACKUP_*
+
+# Virtual Machines & Heavy Disk Images
+*.vmdk
+*.qcow2
+*.iso
+*.ova
+*.vdi
+
+# OS Artifacts
+Thumbs.db
+Desktop.ini
+.DS_Store
+$RECYCLE.BIN/
+
+# Raw System Logs & Dumps
+*.log
+*.dump
+*.pcapng
+*.cap
+
+# Exclusion of External / Collaborator Materials
+*wazuh_tailscale_internship_report*
+*ilyass*
+*nasrallah*
