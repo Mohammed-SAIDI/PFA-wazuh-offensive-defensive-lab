@@ -99,6 +99,9 @@ The defensive monitoring stack is centered around **Wazuh SIEM**:
 2. **Alert Rules & Correlation**:
    - Web application attacks detected: SQL injections (`Rule 31103`), directory traversals, and web shell invocations.
    - Host anomaly alerts: Promiscuous network mode detection on network interfaces, unauthorized `UID 0` modifications, and rogue SSH sessions.
+3. **Manager Configuration & SOAR Integration**:
+   - Hardened and sanitized Wazuh Manager configuration provided in [`configs/wazuh/ossec.conf`](configs/wazuh/ossec.conf).
+   - Automated event dispatching to **Shuffle SOAR** (Webhook integrations) for incident response workflows.
 
 *Visual Evidence:*
 - [Wazuh Threat Detection - Service & IDS Events](docs/evidence/04-wazuh-detection/03_wazuh_correlation_M2.png)
@@ -164,6 +167,10 @@ PFA-wazuh-offensive-defensive-lab/
 |
 +-- README.md                      # Comprehensive lab overview & technical guide
 +-- .gitignore                     # Protection against secrets, keys, and dumps
+|
++-- configs/                       # Hardened & sanitized configuration files
+|   +-- wazuh/
+|       +-- ossec.conf             # Wazuh Manager config & Shuffle SOAR integration
 |
 +-- scripts/                       # Automated SecOps / Remediation scripts
 |   +-- remediation.sh             # Hardening & backdoor cleanup script
