@@ -1,12 +1,12 @@
 #!/bin/bash
 # ==============================================================================
-# SCRIPT DE RETEST DE SÃ‰CURITÃ‰ AUTOMATISÃ‰ (S7) - CIBLE : 192.168.122.210
+# SCRIPT DE RETEST DE SÉCURITÉ AUTOMATISÉ (S7) - CIBLE : 192.168.122.210
 # ==============================================================================
 
 M2_IP="192.168.122.210"
 
 echo "=========================================================================="
-echo "          LANCEMENT DU RETEST DE SÃ‰CURITÃ‰ AUTOMATISÃ‰ (S7)                "
+echo "          LANCEMENT DU RETEST DE SÉCURITÉ AUTOMATISÉ (S7)                "
 echo "=========================================================================="
 
 # ------------------------------------------------------------------------------
@@ -21,51 +21,51 @@ echo "$NMAP_M2"
 
 PORTS_M2_COUNT=$(echo "$NMAP_M2" | grep -c 'open')
 echo "--------------------------------------------------------------------------"
-echo "ðŸ“· [CAPTURE RECOMMANDEE : CAP_S7_01_Nmap_Metasploitable2.png]"
+echo "📷 [CAPTURE RECOMMANDEE : CAP_S7_01_Nmap_Metasploitable2.png]"
 if [ "$PORTS_M2_COUNT" -le 2 ] && [ "$PORTS_M2_COUNT" -gt 0 ]; then
-    echo "[âœ”] SUCCÃˆS : La surface d'attaque est rÃ©duite Ã  $PORTS_M2_COUNT ports ouverts (SSH:22, HTTP:80)."
+    echo "[✔] SUCCÈS : La surface d'attaque est réduite à $PORTS_M2_COUNT ports ouverts (SSH:22, HTTP:80)."
 else
-    echo "[x] Ã‰CHEC : $PORTS_M2_COUNT ports ouverts dÃ©tectÃ©s (Des services sont toujours exposÃ©s)."
+    echo "[x] ÉCHEC : $PORTS_M2_COUNT ports ouverts détectés (Des services sont toujours exposés)."
 fi
 
 echo ""
-echo "[+] Test de non-exÃ©cution PHP dans le dossier Upload (DVWA)..."
+echo "[+] Test de non-exécution PHP dans le dossier Upload (DVWA)..."
 HTTP_UPLOAD_CODE=$(curl -o /dev/null -s -w "%{http_code}\n" "http://$M2_IP/dvwa/hackable/uploads/shell.php")
 if [ "$HTTP_UPLOAD_CODE" -eq 403 ] || [ "$HTTP_UPLOAD_CODE" -eq 404 ]; then
-    echo "[âœ”] SUCCÃˆS : L'exÃ©cution de script PHP est bloquÃ©e (Code HTTP : $HTTP_UPLOAD_CODE)."
+    echo "[✔] SUCCÈS : L'exécution de script PHP est bloquée (Code HTTP : $HTTP_UPLOAD_CODE)."
 else
-    echo "[x] Ã‰CHEC : Code HTTP $HTTP_UPLOAD_CODE reÃ§u lors du test d'upload PHP."
+    echo "[x] ÉCHEC : Code HTTP $HTTP_UPLOAD_CODE reçu lors du test d'upload PHP."
 fi
 
 echo ""
-echo "[+] VÃ©rification de l'inaccessibilitÃ© distante de MySQL (3306)..."
+echo "[+] Vérification de l'inaccessibilité distante de MySQL (3306)..."
 nc -z -w 2 $M2_IP 3306
 if [ $? -ne 0 ]; then
-    echo "[âœ”] SUCCÃˆS : Le port MySQL 3306 est inaccessible depuis le rÃ©seau."
+    echo "[✔] SUCCÈS : Le port MySQL 3306 est inaccessible depuis le réseau."
 else
-    echo "[x] Ã‰CHEC : Le port MySQL 3306 est toujours ouvert sur le rÃ©seau !"
+    echo "[x] ÉCHEC : Le port MySQL 3306 est toujours ouvert sur le réseau !"
 fi
 
 # ------------------------------------------------------------------------------
 # 2. VERIFICATION DE LA SONDE SIEM / KALI
 # ------------------------------------------------------------------------------
 echo ""
-echo "=== [2/2] Audit de la sonde SIEM / Capteur RÃ©seau Kali Linux ==="
+echo "=== [2/2] Audit de la sonde SIEM / Capteur Réseau Kali Linux ==="
 IFACE=$(ip -o link show | awk -F': ' '$2 !~ "^lo" {print $2}' | head -n 1)
 
-echo "[+] Interface rÃ©seau dÃ©tectÃ©e : $IFACE"
+echo "[+] Interface réseau détectée : $IFACE"
 PROMISC_CHECK=$(ip link show "$IFACE" 2>/dev/null | grep "PROMISC")
 
 echo "--------------------------------------------------------------------------"
-echo "ðŸ“· [CAPTURE RECOMMANDEE : CAP_S7_02_Promisc_Mode_Set.png]"
+echo "📷 [CAPTURE RECOMMANDEE : CAP_S7_02_Promisc_Mode_Set.png]"
 if [ -n "$PROMISC_CHECK" ]; then
-    echo "[âœ”] SUCCÃˆS : L'interface $IFACE est bien en mode PROMISCUOUS."
+    echo "[✔] SUCCÈS : L'interface $IFACE est bien en mode PROMISCUOUS."
 else
     echo "[x] ALERTE : L'interface $IFACE n'est PAS en mode promiscuous."
-    echo "    ExÃ©cutez : sudo ip link set $IFACE promisc on"
+    echo "    Exécutez : sudo ip link set $IFACE promisc on"
 fi
 
 echo ""
 echo "=========================================================================="
-echo "                   FIN DU RETEST AUTOMATISÃ‰ S7                            "
+echo "                   FIN DU RETEST AUTOMATISÉ S7                            "
 echo "=========================================================================="

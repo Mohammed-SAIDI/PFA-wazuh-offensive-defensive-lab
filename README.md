@@ -142,16 +142,16 @@ Verifies that mitigations are active and effectively eliminate security vulnerab
 [+] Execution du scan Nmap complet...
 22/tcp open  ssh
 80/tcp open  http
-[âœ”] SUCCES : La surface d'attaque est reduite a 2 ports ouverts (SSH:22, HTTP:80).
+[✔] SUCCES : La surface d'attaque est reduite a 2 ports ouverts (SSH:22, HTTP:80).
 
 [+] Test de non-execution PHP dans le dossier Upload (DVWA)...
-[âœ”] SUCCES : L'execution de script PHP est bloquee (Code HTTP : 403).
+[✔] SUCCES : L'execution de script PHP est bloquee (Code HTTP : 403).
 
 [+] Verification de l'inaccessibilite distante de MySQL (3306)...
-[âœ”] SUCCES : Le port MySQL 3306 est inaccessible depuis le reseau.
+[✔] SUCCES : Le port MySQL 3306 est inaccessible depuis le reseau.
 
 === [2/2] Audit de la sonde SIEM / Capteur Reseau ===
-[âœ”] SUCCES : L'interface eth0 est bien en mode PROMISCUOUS.
+[✔] SUCCES : L'interface eth0 est bien en mode PROMISCUOUS.
 ```
 
 *Visual Evidence:*
@@ -177,9 +177,8 @@ PFA-wazuh-offensive-defensive-lab/
 |   +-- retest.sh                  # Automated compliance & retest verification
 |
 +-- docs/
-    +-- report/
-    |   +-- rapport_pfa_saidi.pdf  # Personal PFA academic report (Mohammed Saidi)
     +-- evidence/                  # Sanitized and verified screenshots
+        +-- 01-reconnaissance/     # Network discovery and service mapping
         +-- 02-web-exploits/       # DVWA SQLi, XSS, RCE, upload bypass
         +-- 03-system-attacks/     # Wireshark network protocol analysis
         +-- 04-wazuh-detection/    # Real-time SIEM alerts & correlation rules
